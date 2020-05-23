@@ -1,5 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+This project was created with **Reactjs**, **React Custon Hook** and **ChartJS** for stock charts.
+
+Cryptocurrency **APIs** are consumed thanks to: **cryptocompare.com**
+
+Link this proyect in **Netlify** : https://lucid-knuth-a35df5.netlify.app/
+
 ## Available Scripts
 
 In the project directory, you can run:
