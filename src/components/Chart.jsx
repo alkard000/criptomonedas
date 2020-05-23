@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Chartjs from "chart.js";
 import styled from '@emotion/styled';
 
-import {timeConverter} from '../helpers/helpers';
+import {timeConverter, addData} from '../helpers/helpers';
 
 const Titulo = styled.h1`
   font-family:'Bebas Neue', cursive;
@@ -50,33 +50,9 @@ const Chart = ({resultadoTiempo}) => {
       datasets: [
         {
           label: "Cotizacion de los ultimos 10 Dias",
-          data: [],
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)",
-            "rgba(255, 0, 0, 0.2)",
-            "rgba(243, 0, 255, 0.2)",
-            "rgba(0, 27, 255, 0.2)",
-            "rgba(232, 255, 0, 0.2)",
-            "rgba(0, 0, 0, 0.2)"
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)",
-            "rgba(255, 0, 0, 1)",
-            "rgba(243, 0, 255, 1)",
-            "rgba(0, 27, 255, 1)",
-            "rgba(232, 255, 0, 1)",
-            "rgba(0, 0, 0, 1)"
-          ],
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          backgroundColor: "rgba(57, 225, 20, 0.2)",
+          borderColor: "rgba(57, 225, 20, 1)",
           borderWidth: 1
         }
       ]
@@ -118,49 +94,22 @@ const Chart = ({resultadoTiempo}) => {
       precios.push(i.close);    
     })
 
-    //AGREGANDO LOS VALORES A LA GRAFICA
-    function addData() {
-      chartInstance.data.labels[0] = tiempo[0];
-      chartInstance.data.datasets[0].data[0] = precios[0];
-
-      chartInstance.data.labels[1] = tiempo[1];
-      chartInstance.data.datasets[0].data[1] = precios[1];
-
-      chartInstance.data.labels[2] = tiempo[2];
-      chartInstance.data.datasets[0].data[2] = precios[2];
-
-      chartInstance.data.labels[3] = tiempo[3];
-      chartInstance.data.datasets[0].data[3] = precios[3];
-
-      chartInstance.data.labels[4] = tiempo[4];
-      chartInstance.data.datasets[0].data[4] = precios[4];
-
-      chartInstance.data.labels[5] = tiempo[5];
-      chartInstance.data.datasets[0].data[5] = precios[5];
-
-      chartInstance.data.labels[6] = tiempo[6];
-      chartInstance.data.datasets[0].data[6] = precios[6];
-
-      chartInstance.data.labels[7] = tiempo[7];
-      chartInstance.data.datasets[0].data[7] = precios[7];
-      
-      chartInstance.data.labels[8] = tiempo[8];
-      chartInstance.data.datasets[0].data[8] = precios[8];
-
-      chartInstance.data.labels[9] = tiempo[9];
-      chartInstance.data.datasets[0].data[9] = precios[9];
-
-      chartInstance.data.labels[10] = tiempo[10];
-      chartInstance.data.datasets[0].data[10] = precios[10];
-
-    chartInstance.update();
+    if(tiempo != [] || precios != []){
+      setTimeout(() => {
+        document.getElementById('graficar').click();        
+      }, 3500)
     }
+
+    const handleClick = () => {
+      addData(chartInstance, tiempo, precios);
+    }
+
 
   return (
     <div>
       <Titulo>Cotizacion de los Ultimos 10 Dias</Titulo>
-      <Boton onClick={addData}>Graficar</Boton>
-      {(resultadoTiempo === {}) ? null : <canvas ref={chartContainer} />}
+      <Boton hidden="true" id="graficar" onClick={handleClick}>Graficar</Boton>
+      <canvas ref={chartContainer}/>
     </div>
   );
 };
